@@ -15,6 +15,7 @@ def main():
     values = read_in_1d()
     print(values)
     values.sort()
+    print(values[-1])
     print(sum(values[-3:]))
 
 
