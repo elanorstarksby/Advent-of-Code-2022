@@ -9,24 +9,24 @@ def read_in():
 
 
 def calculate_sizes(values):
-    path = []
-    sizes = {}
+    path = []  # tracks the path of the directory we're looking at
+    sizes = {}  # map from directory (full path) to its size
     for i in range(len(values)):
-        line = values[i]
-        if line[0] == "$" and line[2:4] == "cd":
-            if line[5:] == "..":
+        line = values[i]  # get next line of terminal output
+        if line[0] == "$" and line[2:4] == "cd":  # if cd instruction
+            if line[5:] == "..":  # go up one level
                 path.pop()
-            elif line[5:] == "/":
+            elif line[5:] == "/":  # go to root
                 path = []
             else:
-                path.append(line[5:])
-        elif line[0] != '$' and not line.startswith("dir"):
-            for d in range(len(path) + 1):  # iterate through index of directories in path
-                size = int(line.split(' ')[0])
-                this_path = '/' + '/'.join(path[0:d])
-                if this_path not in sizes:
+                path.append(line[5:])  # add the next directory to the list for path
+        elif line[0] != '$' and not line.startswith("dir"):  # this means it's a file
+            for d in range(len(path) + 1):  # iterate through index of directories in path so
+                size = int(line.split(' ')[0])  # this will be the size of file on the current line
+                this_path = '/' + '/'.join(path[0:d])  # this is key for sizes dict
+                if this_path not in sizes:  # path not already in dictionary so initialise
                     sizes[this_path] = 0
-                sizes[this_path] += size
+                sizes[this_path] += size  # add the size of this file to the size of the directory
     return sizes
 
 
