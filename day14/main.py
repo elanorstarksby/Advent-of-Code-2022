@@ -10,6 +10,17 @@ def read_in():
         rocks_co_ords.append(rock_coord)
     return rocks_co_ords
 
+# a truly beautiful list comprehension made by ChatGPT using my read_in() function:
+# def read_in():
+#     with open("input.txt", "r") as f:
+#         return [
+#             [
+#                 tuple([int(a) for a in corner.split(',')])
+#                 for corner in rock
+#             ]
+#             for rock in [line.split(' -> ') for line in f.readlines()]
+#         ]
+
 
 def map_out_rocks(rocks):
     obstacles = {}
@@ -75,7 +86,7 @@ def map_out_rocks_floor(rocks):
                 for x in range(min(cx, nx), max(cx, nx) + 1):
                     obstacles[(x, cy)] = 'r'
     for x in range(0, 1000):
-        obstacles[(x, max_y+2)] = 'f'
+        obstacles[(x, max_y + 2)] = 'f'
     return obstacles
 
 
