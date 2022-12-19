@@ -33,13 +33,13 @@ def initialise_rock(rock_shape, height):
     return tuple([(x + 2, y + y0) for x, y in rock_shape])
 
 
-def p1(jets, rocks):
+def p1(jets, rocks, times):
     jet = 0
     jet_count = len(jets)
     chamber = set()
     height = 0
 
-    for rock_count in range(2022):
+    for rock_count in range(times):
         rock_coords = initialise_rock(rocks[rock_count % len(rocks)], height)
         # print(rock_coords)
 
@@ -70,7 +70,7 @@ def p2(jets, rocks):
     chamber = set()
     height = 0
 
-    for rock_count in range(2022):
+    for rock_count in range(len(jets) * 5):
         rock_coords = initialise_rock(rocks[rock_count % len(rocks)], height)
         # print(rock_coords)
 
@@ -90,8 +90,8 @@ def p2(jets, rocks):
 
         chamber.update(rock_coords)
 
-        # print_chamber(chamber, 7, highest_point)
-        # print()
+    # print_chamber(chamber, 7, height)
+    # print()
     return height
 
 
@@ -104,8 +104,17 @@ def print_chamber(fallen_rocks, chamber_width, chamber_height):
         chamber[y][x] = '#'
 
     chamber.reverse()
-    for row in chamber:
+    for row in chamber[0:10]:
         print(''.join(row))
+    print()
+    for row in chamber[-10:]:
+        print(''.join(row))
+
+
+def repeating(height, jets, rocks):
+    print(1000000000000 // (len(jets) * 5))
+    print(1000000000000 % (len(jets) * 5))
+    return (height - 1) * (1000000000000 // (len(jets) * 5)) + p1(jets, rocks, 1000000000000 % (len(jets) * 5))
 
 
 def main():
@@ -116,9 +125,10 @@ def main():
              ((0, 0), (0, 1), (0, 2), (0, 3)),
              ((0, 0), (0, 1), (1, 0), (1, 1))
              )
-    height = p1(jets, rocks)
-    print(height)
-    # print(p2())
+    print(p1(jets, rocks, 2022))
+    after_one = p2(jets, rocks)
+    print(len(jets))
+    print(repeating(after_one, jets, rocks))
 
 
 if __name__ == "__main__":
